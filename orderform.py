@@ -9,3 +9,5 @@ class Order:
 # Define Constants
 subtotal = 0 # Total Before Tax
 total = subtotal * 1.07 # Total After Tax
+
+# lalalla
