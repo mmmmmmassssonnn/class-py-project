@@ -1,4 +1,4 @@
-# Purpose:
+# Purpose: A menu for a coffee shop
 # Date:
 # Programmers:
 
