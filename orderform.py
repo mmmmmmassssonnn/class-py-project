@@ -1,8 +1,7 @@
 class Order:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
+    def __init__(self, price, order):
+        self.price = price
+        self.order = order
 
     def orderFormat(self):
         # do a return with the order formatted here
