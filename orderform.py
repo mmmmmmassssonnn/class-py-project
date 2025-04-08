@@ -1,3 +1,7 @@
+# Purpose:
+# Date:
+# Programmers:
+
 class Order:
     def __init__(self, price, order):
         self.price = price
