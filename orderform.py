@@ -1,6 +1,6 @@
 # Purpose: A menu for a coffee shop
-# Date:
-# Programmers:
+# Date: April 15th 2025
+# Programmers: Mason Miller, Naseem Hassan
 
 import json
 
