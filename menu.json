@@ -1,0 +1,22 @@
+{
+  "Espresso": {
+    "price": 3,
+    "shorthand": "Es"
+  },
+  "Latte": {
+    "price": 4,
+    "shorthand": "La"
+  },
+  "Cappuccino": {
+    "price": 3.5,
+    "shorthand": "Ca"
+  },
+  "Muffins": {
+    "price": 2,
+    "shorthand": "Mu"
+  },
+  "Croissants": {
+    "price": 5,
+    "shorthand": "Cr"
+  }
+}
