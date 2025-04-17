@@ -1,0 +1,81 @@
+# Purpose: A menu for a coffee shop
+# Date: April 17th 2025
+# Programmers: Naseem Hassan, Mason Miller, Evan Bellack
+
+import json
+
+# Define Constants
+subtotal = 0  # Total Before Tax
+full_order = []
+
+keep_going = True  # The loop should keep going
+
+def discount_handler(code, sub):  # Handle discounts
+    if code == "5OFF":
+        return sub * 0.95
+    if code == "SENIOR":
+        return sub * 0.95
+    if code == "SECRET":
+        return sub * 0.90
+    else:
+        return sub  # Return unchanged if code is invalid
+
+# Load Menu from JSON
+with open('menu.json', 'r') as file:
+    data = json.load(file)
+
+# Creative Menu Display
+print("\n☕ Welcome to COFFEE CODE 💻")
+print("Fuel your mind with our handcrafted blends:\n")
+
+for item in data:
+    print(f"  🔹 [{item['shorthand']}] {item['name']} — ${item['price']:.2f}")
+
+print("\nEnter the shorthand code for your item (e.g., 'Es' for Espresso). Let’s code and caffeinate!\n")
+
+# Helper Functions
+def get_name(menuitem):  # Get the name of a menu item from shorthand
+    option = next(
+        (item for item in data if item["shorthand"].lower() == menuitem.lower()), None
+    )
+return option["price"] if option else None
+
+# Ordering Loop
+while keep_going:
+    product_choice = input("Please enter the item you'd like to buy: ").strip()
+    price = get_price(product_choice)
+    name = get_name(product_choice)
+
+    if price is None or name is None:
+        print("❌ Please enter a valid item code from the menu.")
+        continue
+
+    subtotal += price
+    full_order.append(name)
+
+    another_order = input("Would you like to add another item? [Y/N]: ").strip()
+    if another_order.lower() == "n":
+        keep_going = False
+
+# Discounts
+discount_prompt = input("Do you have a discount code? [Y/N]: ").strip()
+if discount_prompt.lower() == "y":
+    disc_code = input("Please enter your discount code: ").strip()
+    new_subtotal = discount_handler(disc_code.upper(), subtotal)
+    if new_subtotal != subtotal:
+        print("✅ Successfully applied discount.")
+        subtotal = new_subtotal
+    else:
+        print("❌ Invalid discount code.")
+
+# Final Receipt
+print("\n🧾 Your COFFEE CODE Receipt:")
+for item in full_order: 
+print(f" - {item}")
+print(f"\nSubtotal: ${subtotal:.2f}")
+print(f"Tax (7%): ${subtotal * 0.07:.2f}")
+total = subtotal * 1.07
+print(f"Total Due: ${total:.2f}")
+
+print("\n💻 Thank you for coding with us at COFFEE CODE ☕! See you again soon.")
+
