@@ -31,7 +31,7 @@ def discount_handler(code, sub): # Handle discounts
 with open('menu.json', 'r') as file: # Open the menu json file
     data = json.load(file)
 
-# ☕ Fun & Emoji-Filled Menu Preview (ADDED SECTION ONLY)
+# ☕ Fun & Emoji-Filled Menu Preview 
 print("\n☕ Welcome to COFFEE CODE 💻")
 print("Where every sip fuels your next big idea!\n")
 print("Here's what we're brewing today:\n")
