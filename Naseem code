@@ -1,81 +1,93 @@
 # Purpose: A menu for a coffee shop
-# Date: April 17th 2025
-# Programmers: Naseem Hassan, Mason Miller, Evan Bellack
+# Date:
+# Programmers:
 
 import json
 
 # Define Constants
-subtotal = 0  # Total Before Tax
+subtotal = 0 # Total Before Tax
 full_order = []
 
-keep_going = True  # The loop should keep going
+keep_going = True # The loop should keep going
 
-def discount_handler(code, sub):  # Handle discounts
+def discount_handler(code, sub): # Handle discounts
     if code == "5OFF":
-        return sub * 0.95
+        subtotal = sub *.95
+        return subtotal
     if code == "SENIOR":
-        return sub * 0.95
+        subtotal = sub *.95
+        return subtotal
     if code == "SECRET":
-        return sub * 0.90
-    else:
-        return sub  # Return unchanged if code is invalid
+        subtotal = sub *.90
+        return subtotal
+    else: return "404"
 
-# Load Menu from JSON
-with open('menu.json', 'r') as file:
+# Potential items: Espresso, Latte, Cappuccino, Muffins, Croissants
+# Prices: 3, 4, 3.5, 2, 5
+# tax rate: 0.07
+# Discounts: Codes: 5OFF, SENIOR, SECRET
+# Payment method: Cash, Card
+
+with open('menu.json', 'r') as file: # Open the menu json file
     data = json.load(file)
 
-# Creative Menu Display
+# ☕ Fun & Emoji-Filled Menu Preview (ADDED SECTION ONLY)
 print("\n☕ Welcome to COFFEE CODE 💻")
-print("Fuel your mind with our handcrafted blends:\n")
+print("Where every sip fuels your next big idea!\n")
+print("Here's what we're brewing today:\n")
+
+emoji_map = {
+    "Espresso": "☕",
+    "Latte": "🥛",
+    "Cappuccino": "🍶",
+    "Muffins": "🧁",
+    "Croissants": "🥐"
+}
 
 for item in data:
-    print(f"  🔹 [{item['shorthand']}] {item['name']} — ${item['price']:.2f}")
+    emoji = emoji_map.get(item["name"], "")
+    print(f"  🔹 [{item['shorthand']}] {item['name']} {emoji} — ${item['price']:.2f}")
 
-print("\nEnter the shorthand code for your item (e.g., 'Es' for Espresso). Let’s code and caffeinate!\n")
+print("\n(Use the item shorthand to order, like 'Es' for Espresso!)\n")
 
-# Helper Functions
-def get_name(menuitem):  # Get the name of a menu item from shorthand
+def get_name(menuitem): # Get the name of a menu item from shorthand
     option = next(
-        (item for item in data if item["shorthand"].lower() == menuitem.lower()), None
+        (item for item in data if item["shorthand"] == menuitem), None
     )
-return option["price"] if option else None
+    if option:
+        return option["name"]
+    return None
 
-# Ordering Loop
-while keep_going:
-    product_choice = input("Please enter the item you'd like to buy: ").strip()
-    price = get_price(product_choice)
-    name = get_name(product_choice)
+def get_price(menuitem): # Get price of a menu item from shorthand
+    option = next(
+        (item for item in data if item["shorthand"] == menuitem), None
+    )
+    if option:
+        return option["price"]
+    return None
 
-    if price is None or name is None:
-        print("❌ Please enter a valid item code from the menu.")
-        continue
+while keep_going == True: # Start the loop
+    product_choice = input("Please enter the item you'd like to buy ")
+    try: # Try/Except for getting the prices and such
+        subtotal += get_price(product_choice)
+        full_order.append(get_name(product_choice))
+    except:
+        print("Please enter a valid item.")
+        break
+    another_order = input("Do you have another order [Y/N]: ") # Another order?
+    if another_order.lower() == "n": keep_going = False
 
-    subtotal += price
-    full_order.append(name)
-
-    another_order = input("Would you like to add another item? [Y/N]: ").strip()
-    if another_order.lower() == "n":
-        keep_going = False
-
-# Discounts
-discount_prompt = input("Do you have a discount code? [Y/N]: ").strip()
+discount_prompt = input("Do you have a discount code [Y/N]: ") # Do they have a code
 if discount_prompt.lower() == "y":
-    disc_code = input("Please enter your discount code: ").strip()
-    new_subtotal = discount_handler(disc_code.upper(), subtotal)
-    if new_subtotal != subtotal:
-        print("✅ Successfully applied discount.")
-        subtotal = new_subtotal
-    else:
-        print("❌ Invalid discount code.")
-
-# Final Receipt
-print("\n🧾 Your COFFEE CODE Receipt:")
-for item in full_order: 
-print(f" - {item}")
-print(f"\nSubtotal: ${subtotal:.2f}")
-print(f"Tax (7%): ${subtotal * 0.07:.2f}")
-total = subtotal * 1.07
-print(f"Total Due: ${total:.2f}")
-
-print("\n💻 Thank you for coding with us at COFFEE CODE ☕! See you again soon.")
-
+    disc_code = input("Please enter your discount code ") # Enter code
+    try_discount = discount_handler(disc_code.upper(), subtotal)
+    if try_discount != '404': print('Successfully applied discount.') # See if valid
+    else: print('Invalid discount code.')
+    subtotal = try_discount # Update subtotal
+print("You have ordered the following items:") # Print the order
+for item in full_order:
+    print(item, end=" | ")
+print()
+total = subtotal * 1.07 # Total After
+print(f'For a total cost of ${total:.2f}')
+print("Thank you for your order and come again!")
