@@ -1,6 +1,20 @@
 # Purpose: A menu for a coffee shop
-# Date:
+# Date: April 21, 2025
 # Programmers:
+
+# Algorithm
+# I. Input
+#   A. Display menu
+#   B. Get user input for items
+#   C. Get user input for discounts if any
+# II. Process
+#   A. With each item, update running subtotal
+#   B. With the discounts, use a function to update the subtotal
+# III. Output
+#   A. Display the items ordered
+#   B. Display the total with tax
+#   C. Display a greeting message
+# IV. End.
 
 import json
 
@@ -81,9 +95,10 @@ discount_prompt = input("Do you have a discount code [Y/N]: ") # Do they have a 
 if discount_prompt.lower() == "y":
     disc_code = input("Please enter your discount code ") # Enter code
     try_discount = discount_handler(disc_code.upper(), subtotal)
-    if try_discount != '404': print('Successfully applied discount.') # See if valid
+    if try_discount != '404': # See if valid
+        print('Successfully applied discount.')
+        subtotal = try_discount # Update subtotal
     else: print('Invalid discount code.')
-    subtotal = try_discount # Update subtotal
 print("You have ordered the following items:") # Print the order
 for item in full_order:
     print(item, end=" | ")
@@ -91,3 +106,5 @@ print()
 total = subtotal * 1.07 # Total After
 print(f'For a total cost of ${total:.2f}')
 print("Thank you for your order and come again!")
+
+# End.
