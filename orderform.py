@@ -36,12 +36,6 @@ def discount_handler(code, sub): # Handle discounts
         return subtotal
     else: return "404"
 
-# Potential items: Espresso, Latte, Cappuccino, Muffins, Croissants
-# Prices: 3, 4, 3.5, 2, 5
-# tax rate: 0.07
-# Discounts: Codes: 5OFF, SENIOR, SECRET
-# Payment method: Cash, Card
-
 with open('menu.json', 'r') as file: # Open the menu json file
     data = json.load(file)
 
