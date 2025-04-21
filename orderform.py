@@ -1,6 +1,6 @@
 # Purpose: A menu for a coffee shop
 # Date: April 21, 2025
-# Programmers:
+# Programmers: Mason, Naseem
 
 # Algorithm
 # I. Input
