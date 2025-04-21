@@ -31,6 +31,25 @@ def discount_handler(code, sub): # Handle discounts
 with open('menu.json', 'r') as file: # Open the menu json file
     data = json.load(file)
 
+# ☕ Fun & Emoji-Filled Menu Preview 
+print("\n☕ Welcome to COFFEE CODE 💻")
+print("Where every sip fuels your next big idea!\n")
+print("Here's what we're brewing today:\n")
+
+emoji_map = {
+    "Espresso": "☕",
+    "Latte": "🥛",
+    "Cappuccino": "🍶",
+    "Muffins": "🧁",
+    "Croissants": "🥐"
+}
+
+for item in data:
+    emoji = emoji_map.get(item["name"], "")
+    print(f"  🔹 [{item['shorthand']}] {item['name']} {emoji} — ${item['price']:.2f}")
+
+print("\n(Use the item shorthand to order, like 'Es' for Espresso!)\n")
+
 def get_name(menuitem): # Get the name of a menu item from shorthand
     option = next(
         (item for item in data if item["shorthand"] == menuitem), None
@@ -71,5 +90,4 @@ for item in full_order:
 print()
 total = subtotal * 1.07 # Total After
 print(f'For a total cost of ${total:.2f}')
-print("Thank you for your order!")
-
+print("Thank you for your order and come again!")
